@@ -59,7 +59,7 @@ function App() {
           <Route path='/' element={<Shortener />} />
           <Route path='/login' element={<Login />} />
           <Route path='/my-urls' element={<>My URLs Page</>} />
-          <Route path='/urls/:id' element={<Redirector />} />
+          <Route path='/u/:id' element={<Redirector />} />
         </Routes>
       </PageWrapper>
     </PageContainer>
