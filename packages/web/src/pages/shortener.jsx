@@ -27,7 +27,7 @@ const Shortener = ({}) => {
         console.log(data)
         // data.url => the newly minted short url
         // shortRef.current.value = data.url
-        let url = `${import.meta.env.VITE_SHORTENER_URL}/urls/${data.id}`
+        let url = `${window.location.host}/u/${data.id}`
         setOutputState(url)
         navigator.clipboard.writeText(url)
         })

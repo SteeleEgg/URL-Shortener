@@ -49,6 +49,7 @@ const Login = () => {
             // do login
             fetch(`${import.meta.env.VITE_SHORTENER_URL}/auth/login`, {
                 method: `POST`,
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -57,6 +58,7 @@ const Login = () => {
                     password: pageState.inputs.password
                 })
             }).then(res => res.json()).then(data => {
+                console.log(data)
                 // Handle POST response
                 if (data.message == "Logged in!") {
                     navigate('/')
