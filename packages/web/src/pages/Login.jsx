@@ -95,7 +95,7 @@ const Login = () => {
 
     return (
         <LoginWrapper>
-            <Title>{pageState.method == "login" ? "Login" : "Registrar"}</Title>
+            <Title>{pageState.method == "login" ? "Login" : "Register"}</Title>
                 <Input onChange={e => handleInput(e, "email")} value={pageState.inputs.email} placeholder="Email"></Input>
                 <Input onChange={e => handleInput(e, "password")} value={pageState.inputs.password} type="password" placeholder="Password"></Input>
                 {pageState.method == "register" && 
