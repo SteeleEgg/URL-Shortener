@@ -26,6 +26,7 @@ export const UrlBox = styled.input`
   z-index: 2;
   border: 1px solid #353a3b;
   box-shadow: 2px 3px 8px #00000033;
+  color: #ebebeb;
 `;
 
 export const GetShortButton = styled.div`
@@ -42,6 +43,7 @@ export const GetShortButton = styled.div`
   cursor: pointer;
   box-shadow: 2px 3px 8px #00000033;
   transition: all 222ms;
+  color: #ebebeb;
 
   &:hover {
     border: 1px solid #eaebe333;
@@ -60,6 +62,7 @@ export const OutputBox = styled.input`
   z-index: 2;
   border: 1px solid #353a3b;
   box-shadow: 2px 3px 8px #00000033;
+  color: #ebebeb;
 `;
 
 export const Checkbox = styled.input`
