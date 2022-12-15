@@ -1,0 +1,16 @@
+{
+  "name": "url_shortener",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "api",
+    "web",
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "conc --kill-others \"yarn workspace api start\" \"yarn workspace web dev\"",
+    "start-prod": "conc --kill-others \"yarn workspace api start\" \"yarn workspace web prod\""
+  }
+}
