@@ -83,6 +83,9 @@ const Login = () => {
                     if (data.message == "Created") {
                         navigate('/')
                     }
+                    if (data.message == `Email is already taken.`){
+                        alert("Email is already taken.")
+                      }
                 })
             }
             // ensure agree is true
