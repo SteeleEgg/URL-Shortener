@@ -42,11 +42,35 @@ urlsRouter.get(`/:id`, (req, res) => {
     })
 })
 
+urlsRouter.get(`/one/:id`, (req, res) => {
+    const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, err => {
+        if (err) {
+            return res.status(500).json(err)
+        }
+        db.all(`
+            SELECT * FROM ${config.table} WHERE id="${req.params.id}"
+        `, (err, rows) => {
+            if (err) {
+                return res.status(500).json(err)
+            }
+            if (rows.length > 0) {
+                res.status(200).json({url: rows[0].url})
+            } else {
+                res.status(404).json({message: "No URL Found"})
+            }
+        }).close()
+    })
+})
+
 urlsRouter.post(`/`, (req, res) => {
 
-    if (!req.session.isAuthenticated) {
+    console.log("Getting request")
+
+    if (!req.session.userId) {
         return res.status(401).send({"message": "Must log in first."})
     }
+
+    let { userId } = req.session
 
     // console.log("got here", req.body)
 
@@ -67,7 +91,7 @@ urlsRouter.post(`/`, (req, res) => {
             return res.status(500).json(err)
         } else {
             db.all(`
-                INSERT INTO ${config.table} (id, url, userId) VALUES ("${id}","${req.body.url}","${req.session.id ?? 0}");
+                INSERT INTO ${config.table} (id, url, userId) VALUES ("${id}","${req.body.url}","${userId}");
             `, (err, rows) => {
                 if (err) {
                     return res.status(500).json({err})
