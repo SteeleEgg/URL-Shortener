@@ -7,16 +7,33 @@ const dbPath = `./${config.dbFile}`
 const urlsRouter = express.Router()
 
 urlsRouter.get(`/all`, (req, res) => {
+
+    let errors = []
+    if (!req.headers["x-user-id"]) errors.push("Not logged in")
+    if (errors.length > 0 ) {
+        return res.status(400).send(errors)
+    }
+
     const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, err => {
         if (err) {
             return res.status(500).json(err)
         }
         db.all(`
-            SELECT * FROM ${config.table}
+            SELECT * FROM ${config.table} WHERE userId="${req.headers["x-user-id"]}"
         `, (err, rows) => {
             if (err) {
                 return res.status(500).json(err)
             }
+            /**
+             * [
+             *  {
+             *      "id": "some ID",
+             *      "url": "some url",
+             *      "userId": "some user's id"
+             *  },
+             *  ...
+             * ]
+             */
             res.status(200).json(rows)
         }).close()
     })
@@ -66,9 +83,11 @@ urlsRouter.post(`/`, (req, res) => {
 
     console.log("Getting request")
 
-    if (!req.session.userId) {
-        return res.status(401).send({"message": "Must log in first."})
-    }
+    console.log("on create url", req.session)
+
+    // if (!req.session.cookie.userId) {
+    //     return res.status(401).send({"message": "Must log in first."})
+    // }
 
     let { userId } = req.session
 
@@ -77,6 +96,7 @@ urlsRouter.post(`/`, (req, res) => {
     let errors = []
     
     if (!req.body.url) errors.push(`No Url Specified`)
+    if (!req.body.id) errors.push(`Not logged in!`)
     let id = faker.datatype.uuid().substring(0,8)
     if (errors.length > 0 ) {
         return res.status(400).json({
@@ -84,14 +104,14 @@ urlsRouter.post(`/`, (req, res) => {
         })
     }
 
-     
     const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, err => {
         if (err) {
             console.error(err.code, err.message)
             return res.status(500).json(err)
         } else {
+            // INSERT INTO ${config.table} (id, url, userId) VALUES ("${id}","${req.body.url}","${userId}");
             db.all(`
-                INSERT INTO ${config.table} (id, url, userId) VALUES ("${id}","${req.body.url}","${userId}");
+                INSERT INTO ${config.table} (id, url, userId) VALUES ("${id}","${req.body.url}","${req.body.id}");
             `, (err, rows) => {
                 if (err) {
                     return res.status(500).json({err})
