@@ -5,7 +5,12 @@ const Redirector = () => {
 
     let { id } = useParams()
     useEffect(() => {
-        window.location.replace(`${import.meta.env.VITE_SHORTENER_URL}/urls/${id}`)
+        fetch(`${import.meta.env.VITE_SHORTENER_URL}/urls/one/${id}`, {
+            credentials: 'include',
+        }).then(res => res.json()).then(data => {
+            window.location.replace(data.url)
+        })
+        // window.location.replace(`${import.meta.env.VITE_SHORTENER_URL}/urls/${id}`)
     })
 
     return (<></>)

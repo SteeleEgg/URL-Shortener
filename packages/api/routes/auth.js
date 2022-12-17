@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 const dbPath = `./${config.dbFile}`
 const authRouter = express.Router()
 
-authRouter.post('/login', (req, res) => {
+authRouter.post('/login', (req, res) =>  {
 
     // Required Field Check
     let errors = []
@@ -29,9 +29,7 @@ authRouter.post('/login', (req, res) => {
             } else {
                 let { id, password } = rows[0]
                 if (await(bcrypt.compare(req.body.password, password))) {
-                    req.session.user = req.body.email
-                    req.session.id = id
-                    req.session.isAuthenticated = true
+                    req.session.userId = id
                     res.status(200).send({"message": "Logged in!"})
 
                 } else {
@@ -49,6 +47,15 @@ authRouter.post('/login', (req, res) => {
         // }).close()
         
     })
+})
+
+authRouter.post("/logout", (req, res) => {
+    req.session.destroy(err => {
+        console.error(err)
+        res.status(500).send({"error": "Couldn't log out."})
+    })
+    res.clearCookie(config.sessionName)
+    res.status(200).send({"message": "Logout complete."})
 })
 
 export default authRouter

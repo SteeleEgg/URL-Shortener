@@ -12,5 +12,8 @@
   "scripts": {
     "start": "conc --kill-others \"yarn workspace api start\" \"yarn workspace web dev\"",
     "start-prod": "conc --kill-others \"yarn workspace api start\" \"yarn workspace web prod\""
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
   }
 }
