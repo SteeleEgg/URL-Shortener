@@ -30,7 +30,9 @@ authRouter.post('/login', (req, res) =>  {
                 let { id, password } = rows[0]
                 if (await(bcrypt.compare(req.body.password, password))) {
                     req.session.userId = id
-                    res.status(200).send({"message": "Logged in!"})
+                    req.session.cookie.userId = id
+                    console.log("On login", req.session)
+                    res.status(200).send({"message": "Logged in!", "id": id})
 
                 } else {
                     res.status(400).send({"message": "Password is incorrect."})

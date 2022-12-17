@@ -5,6 +5,7 @@ import { NavbarContainer, NavbarWrapper, NavbarItem } from './components/NavBar'
 import Shortener from './pages/shortener'
 import Login from './pages/Login'
 import Redirector from './pages/Redirector.jsx'
+import MyUrls from './pages/MyURLs.jsx'
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 
 const PageContainer = styled.div`
@@ -58,7 +59,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Shortener />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/my-urls' element={<>My URLs Page</>} />
+          <Route path='/my-urls' element={<MyUrls />} />
           <Route path='/u/:id' element={<Redirector />} />
         </Routes>
       </PageWrapper>

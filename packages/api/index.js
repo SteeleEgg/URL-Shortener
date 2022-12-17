@@ -22,10 +22,8 @@ app.use(session({
     name: config.sessionName,
     secret: config.sessionKey,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        httpOnly: false,
-        // secure: false,
         maxAge: 24 * 60 * 60 * 1000,
     }
 }))

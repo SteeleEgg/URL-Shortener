@@ -49,14 +49,15 @@ usersRouter.post(`/`, async (req,res) => {
                 INSERT INTO users (id, email, password) VALUES ("${id}","${req.body.email}","${hashedPassword}");
             `, err => {
                 if (err) {
-                    return res.status(500).json({
+                    return res.status(400).json({
                         message: "Email is already taken.",
                         err,
                     })
                 } else {
                     return res.status(201).json({
                         message: "Created",
-                        email: req.body.email
+                        email: req.body.email,
+                        id: id,
                     })
                 }
             }).close()
