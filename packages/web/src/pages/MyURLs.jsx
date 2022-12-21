@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { LoginWrapper } from "../components/Login"
+import { UrlWrapper } from "../components/MyURLs"
 
 const MyUrls = () => {
 
@@ -45,7 +46,7 @@ const MyUrls = () => {
     }
     
     return (
-        <LoginWrapper>
+        <UrlWrapper>
             <table style={{"zIndex": "100"}}>
                 <thead>
                     <tr>
@@ -62,19 +63,19 @@ const MyUrls = () => {
                                 <td>
                                     <a href={data.url} target="blank">{restrictUrlLength(data.url)}</a>
                                 </td>
-                                <td>
+                                <td style={{"padding-left": "20px"}}>
                                     <a href={url} target="blank">{url}</a>
                                 </td>
                                 <td>
-                                    <button onClick={() => navigator.clipboard.writeText(url)}>Copy</button>
-                                    <button>Delete</button>
+                                    <button style={{background: `#2e2e2e`}} onClick={() => navigator.clipboard.writeText(url)}>Copy</button>
+                                    <button style={{background: `#2e2e2e`}} >Delete</button>
                                 </td>
                             </tr>
                         )
                     })}
                 </tbody>
             </table>
-        </LoginWrapper>
+        </UrlWrapper>
     )
 }
 
