@@ -20,12 +20,12 @@ const Login = () => {
 
     const handleRegister = () => {
         if (pageState.method == "login") {
-            setPageState({...pageState, method: "register"})
+            return setPageState({...pageState, method: "register"})
+        }
+        if (pageState.method == "register") {
+            return handleSubmit()
         }
 
-        if (pageState.method == "register") {
-            // handle register
-        }
     }
 
     const handleInput = (event, field) => {
@@ -57,44 +57,57 @@ const Login = () => {
                     email: pageState.inputs.email, 
                     password: pageState.inputs.password
                 })
-            }).then(res => res.json()).then(data => {
-                console.log(data)
-                // Handle POST response
-                if (data.message == "Logged in!") {
-                    navigate('/')
+            }).then(res => {
+                switch(res.status) {
+                    case 200: navigate("/"); break;
+                    case 400: alert("Password incorrect!"); break;
+                    case 404: alert("User not found!"); break;
+                    default: alert("Server Error!"); console.error("Server error!"); break;
                 }
-                if (data.message == `ERROR`){
-                    alert(JSON.stringify(data.errors))
-                  }
+                return res.json()
+            }).then(data => {
+                window.sessionStorage.setItem("shortener-user", data.id)
             })
         }
+    
         if (pageState.method == "register") {
-            // check passwords match
-            if (pageState.inputs.email === pageState.inputs.confirm, pageState.inputs.agree == true) {
-                fetch(`${import.meta.env.VITE_SHORTENER_URL}/users`, {
-                    method: `POST`,
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        email: pageState.inputs.email, 
-                        password: pageState.inputs.password
-                    })
-                }).then(res => res.json()).then(data => {
-                    // Handle POST response
-                    if (data.message == "Created") {
-                        navigate('/')
-                    }
-                })
+            if (pageState.inputs.password !== pageState.inputs.confirm) {
+                // console.log(pageState.inputs.password, pageState.inputs.confirm)
+                alert("Passwords do not match!")
+                return
             }
-            // ensure agree is true
-            // do register
+            if (pageState.inputs.agree == false){
+                alert("Must agree to terms & conditions")
+                return
+            }
+            
+            fetch(`${import.meta.env.VITE_SHORTENER_URL}/users`, {
+                method: `POST`,
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: pageState.inputs.email, 
+                    password: pageState.inputs.password
+                })
+            }).then(res =>  {
+                switch(res.status) {
+                    case 201: navigate("/"); alert("User Created!"); break;
+                    case 400: alert("Email is already taken"); break;
+                    default: alert("Server Error!"); console.error("Server error!"); break;
+                }
+                return res.json()
+            }).then(data => {
+                console.log(data)
+                window.sessionStorage.setItem("shortener-user", data.id)
+            })
         }
     }
 
     return (
         <LoginWrapper>
-            <Title>{pageState.method == "login" ? "Login" : "Registrar"}</Title>
+            <Title>{pageState.method == "login" ? "Login" : "Register"}</Title>
                 <Input onChange={e => handleInput(e, "email")} value={pageState.inputs.email} placeholder="Email"></Input>
                 <Input onChange={e => handleInput(e, "password")} value={pageState.inputs.password} type="password" placeholder="Password"></Input>
                 {pageState.method == "register" && 

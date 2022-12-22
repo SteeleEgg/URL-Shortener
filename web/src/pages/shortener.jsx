@@ -18,18 +18,19 @@ const Shortener = ({}) => {
             },
             credentials: 'include',
             body: JSON.stringify({
+                id: window.sessionStorage.getItem('shortener-user'),
                 url: inputRef.current.value
             })
         }
 
         console.log(requestOptions)
         fetch(`${import.meta.env.VITE_SHORTENER_URL}/urls`, requestOptions).then(res => res.json()).then(data => {
-        console.log(data)
-        // data.url => the newly minted short url
-        // shortRef.current.value = data.url
-        let url = `${window.location.host}/u/${data.id}`
-        setOutputState(url)
-        navigator.clipboard.writeText(url)
+            console.log(data)
+            // data.url => the newly minted short url
+            // shortRef.current.value = data.url
+            let url = `${window.location.host}/u/${data.id}`
+            setOutputState(url)
+            navigator.clipboard.writeText(url)
         })
     }
 
