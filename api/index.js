@@ -31,7 +31,6 @@ redisClient.on("error", err => {
 
 redisClient.connect().then(async res => {
   console.log("Redis connected")
-  console.log("Redis connected")
 
   await redisClient.set("test", "key")
   

@@ -4,13 +4,16 @@ FROM node:14
 WORKDIR /app
 
 # Copy the monorepo files into the working directory
-COPY . .
+COPY package.json .
 
-# Install dependencies for all packages in the monorepo
+RUN npm install -g nodemon
+
 RUN yarn install
 
+COPY . .
+
 # Star the app
-CMD yarn dev --host
+CMD ["yarn", "start"]
 
 # Expose the ports for the api and web packages, as well as the default Redis port
-EXPOSE 5173
+EXPOSE 3000

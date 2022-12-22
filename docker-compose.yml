@@ -40,7 +40,7 @@ services:
     depends_on:
       - api
     ports:
-      - "80:5173"
+      - "80:3000"
     networks:
       - frontend
     volumes:

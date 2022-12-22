@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Redirector from './pages/Redirector.jsx'
 import MyUrls from './pages/MyURLs.jsx'
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
+import { API_URL } from '.'
 
 const PageContainer = styled.div`
   width: 100vw;
@@ -40,7 +41,7 @@ function App() {
 
   const navigate = useNavigate()
 
-  console.log(import.meta.env.VITE_SHORTENER_URL)
+  console.log(API_URL)
 
   return (
     <PageContainer>

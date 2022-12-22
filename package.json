@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "docker-compose up",
+    "build": "docker-compose build",
+
     "docker:build": "docker-compose build",
     "docker:build:fresh": "docker-compose build --no-cache",
     "docker:build:redis": "docker-compose build redis",

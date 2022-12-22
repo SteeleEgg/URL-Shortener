@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { API_URL } from '..'
 import { Title, Middle, UrlBox, GetShortButton, OutputBox } from "../components/ShortenerComponents"
 
 const Shortener = ({}) => {
@@ -24,7 +25,8 @@ const Shortener = ({}) => {
         }
 
         console.log(requestOptions)
-        fetch(`${import.meta.env.VITE_SHORTENER_URL}/urls`, requestOptions).then(res => res.json()).then(data => {
+        
+        fetch(`${API_URL}/urls`, requestOptions).then(res => res.json()).then(data => {
             console.log(data)
             // data.url => the newly minted short url
             // shortRef.current.value = data.url
