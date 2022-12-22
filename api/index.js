@@ -8,6 +8,55 @@ import urlsRouter from "./routes/urls.js";
 import usersRouter from "./routes/users.js";
 import session from "express-session";
 import authRouter from "./routes/auth.js";
+import redis from 'redis'
+
+/** ENV SETUP ********/
+import dotenv from 'dotenv'
+dotenv.config()
+
+/** REDIS SETUP ********/
+export const redisClient = redis.createClient({
+  url: 'redis://redis:6379', 
+  legacyMode: true,
+})
+
+redisClient.on('connect', () => {
+  console.log("Connected to redis")
+})
+
+redisClient.on("error", err => {
+  console.log("Connection error")
+  console.log(err)
+})
+
+redisClient.connect().then(async res => {
+  console.log("Redis connected")
+  console.log("Redis connected")
+
+  await redisClient.set("test", "key")
+  
+  await redisClient.get('test', (err, result) => {
+    console.log("Got key")
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(result)
+    }
+  })
+
+
+})
+
+
+
+
+
+// client.on('error', err => {
+//   console.log("There was a redis error.")
+//   console.log(err)
+// })
+
+// await client.connect()
 
 /** CONFIG ********/
 const app = express();

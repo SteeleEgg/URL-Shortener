@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "private": true,
-  "workspaces": [
-    "api",
-    "web",
-    "packages/*"
-  ],
   "scripts": {
-    "start": "conc --kill-others \"yarn workspace api start\" \"yarn workspace web dev\"",
-    "start-prod": "conc --kill-others \"yarn workspace api start\" \"yarn workspace web prod\""
+    "docker:build": "docker-compose build",
+    "docker:build:fresh": "docker-compose build --no-cache",
+    "docker:build:redis": "docker-compose build redis",
+    "docker:build:api": "docker-compose build api",
+    "docker:build:web": "docker-compose build web",
+    "docker:dev": "docker-compose up --build",
+    "docker:start": "docker-compose up",
+    "docker:prod": "docker-compose up -d",
+    "docker:stop": "docker-compose down"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"
