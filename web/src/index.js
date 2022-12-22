@@ -4,6 +4,8 @@ import App from './App'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 
+export const API_URL = process.env.REACT_APP_SHORTENER_URL
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>

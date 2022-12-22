@@ -2,6 +2,7 @@ import { Button, ButtonWrapper, LoginWrapper } from "../components/Login"
 import { Checkbox, OutputBox as Input, Title } from "../components/ShortenerComponents"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { API_URL } from ".."
 
 const Login = () => {
 
@@ -47,7 +48,8 @@ const Login = () => {
     const handleSubmit = () => {
         if (pageState.method == "login") {
             // do login
-            fetch(`${import.meta.env.VITE_SHORTENER_URL}/auth/login`, {
+            
+            fetch(`${API_URL}/auth/login`, {
                 method: `POST`,
                 credentials: 'include',
                 headers: {
@@ -80,8 +82,8 @@ const Login = () => {
                 alert("Must agree to terms & conditions")
                 return
             }
-            
-            fetch(`${import.meta.env.VITE_SHORTENER_URL}/users`, {
+
+            fetch(`${API_URL}/users`, {
                 method: `POST`,
                 credentials: 'include',
                 headers: {

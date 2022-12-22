@@ -5,8 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "nodemon index.js",
+    "start": "nodemon --ignore node_modules index.js",
     "clean": "node ./util/cleandbcommand.js"
   },
   "dependencies": {
@@ -24,8 +23,5 @@
     "ngrok": "^4.3.3",
     "redis": "^4.5.1",
     "sqlite3": "^5.1.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
   }
 }
